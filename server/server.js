@@ -4,16 +4,18 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const studentRoutes = require("./routes/students"); // ✅ Import your router
 const certificateRoutes = require("./routes/certificate");
+const dotenv = require("dotenv")
 
 app.use(cors());
 app.use(express.json()); // ✅ Required to parse JSON body
 
+dotenv.config()
 // ✅ Use the route
 app.use("/api/student", studentRoutes);
 app.use("/api",certificateRoutes);
 
 // Connect to MongoDB (replace db name as needed)
-mongoose.connect("mongodb://localhost:27017/studentTestPortal", {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log("MongoDB connected"))
